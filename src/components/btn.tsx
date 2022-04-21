@@ -9,37 +9,25 @@ function Btn() {
   const {count_data} = useSelector(state => state.reducer);
 
   // git push
-  function onPress(input: string) {
-    switch (input) {
-      case 'up':
-        if (count_data === 9) {
-          dispatch(CountData(0));
-        } else {
-          dispatch(CountData(count_data + 1));
-        }
-        break;
-      case 'down':
-        if (count_data === 0) {
-          dispatch(CountData(9));
-        } else {
-          dispatch(CountData(count_data - 1));
-        }
-        break;
-    }
+  function onPress(input: number) {
+    let nextValue = (count_data + input) % 10;
+    console.log(nextValue);
+    nextValue = nextValue < 0 ? 10 + nextValue : nextValue;
+    dispatch(CountData(nextValue));
   }
 
   return (
     <View style={styles.btn_box}>
       <TouchableOpacity
         onPress={() => {
-          onPress('down');
+          onPress(-1);
         }}
         style={styles.btn}>
         <Text style={styles.text}>-</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          onPress('up');
+          onPress(1);
         }}
         style={styles.btn}>
         <Text style={styles.text}>+</Text>
